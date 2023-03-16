@@ -5,6 +5,9 @@ package es.unican.is2.SegurosDAO.daos;
 
 import java.util.List;
 
+import es.unican.is2.SegurosCommon.daos.Cliente;
+import es.unican.is2.SegurosCommon.interfaces.IClientesDAO;
+
 
 
 public class ClientesDAO implements IClientesDAO {

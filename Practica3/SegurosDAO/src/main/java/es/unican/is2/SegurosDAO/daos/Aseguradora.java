@@ -12,6 +12,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import es.unican.is2.SegurosCommon.daos.Cliente;
+
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "aseguradora")

@@ -4,7 +4,6 @@ import es.unican.is2.SegurosCommon.daos.Cliente;
 import es.unican.is2.SegurosCommon.daos.Seguro;
 import es.unican.is2.SegurosCommon.interfaces.IClientesDAO;
 import es.unican.is2.SegurosCommon.interfaces.IGestionSeguros;
-import es.unican.is2.SegurosCommon.interfaces.IGestionSeguros.OperacionNoValida;
 import es.unican.is2.SegurosCommon.interfaces.ISegurosDAO;
 
 
@@ -12,29 +11,46 @@ public class GestionSeguros implements IGestionSeguros {
 	private ISegurosDAO seguros;
 	private IClientesDAO clientes;
  	
-
+	/**
+	 * Añade un nuevo seguro al cliente cuyo dni se pasa
+	 * como parámetro.
+	 * @param s Seguro que desea añadir
+	 * @param dni DNI del cliente
+	 * @return El seguro añadido
+	 * 		   null si no se añade porque no se encuentra el cliente
+	 * @throws OperacionNoValida si el seguro ya existe
+	 */
 	public Seguro nuevoSeguro(Seguro s,String dni) throws OperacionNoValida {
-		Cliente c = clientes.cliente(dni);
 		
-		if (s.getMatricula().equals(seguros.seguro(s.getMatricula()))) {
+		if (s.equals(seguros.seguro(s.getMatricula()))) {
 			throw new OperacionNoValida();
 		}
-		c.getSeguros().add(s);
+		
+		if (clientes.cliente(dni) ==  null) {
+			throw new OperacionNoValida();	
+		}
+		seguros.creaSeguro(s);
 		return s;
 	}
+	
+	/**
+	 * Elimina el seguro cuya matrícula asociada se pasa como parámetro y 
+	 * que pertenece al cliente cuyo dni se pasa como parámetro
+	 * @param matrícula Identificador del seguro a eliminar
+	 * @param dni DNI del propietario del vehículo
+ 	 * @return El seguro eliminado
+ 	 *         null si el seguro o el cliente no existen
+ 	 * @throws OperacionNoValida si el seguro no pertenece al dni indicado
+	 */
 
 	public Seguro bajaSeguro(String matricula, String dni)throws OperacionNoValida {
-		Cliente c = new Cliente();
-		Seguro s = new Seguro();
-		
-		c.setDni(dni);
-		s.setMatricula(matricula);
-		if (c.getSeguros().contains(s) ) {
-			throw new OperacionNoValida();
+		if (clientes.cliente(dni) ==  null) {
+			throw new OperacionNoValida();	
 		}
-		c.getSeguros().remove(s);
-		return s;
-		
+		if (seguros.seguro(matricula) != null) {
+			throw new OperacionNoValida();	
+		}
+		return seguros.eliminaSeguro(matricula);
 	}
 	
 	/**
@@ -44,14 +60,10 @@ public class GestionSeguros implements IGestionSeguros {
 	 * 		   null si no se añade porque ya existe
 	 */
 	public Cliente nuevoCliente(Cliente c) {
-		
-		Cliente cli = new Cliente();
-		
-		cli.setDni(c.getDni());
-		cli.setMinusvalia(c.getMinusvalia());
-		cli.setNombre(c.getNombre());
-		return cli;
-		
+		if (clientes.cliente(c.getDni()) !=  null) {
+			throw new OperacionNoValida();	
+		}
+		return clientes.creaCliente(c);	
 	}
 	
 	/**
@@ -63,11 +75,43 @@ public class GestionSeguros implements IGestionSeguros {
 	 *         pero tiene seguros a su nombre
 	 */
 	public Cliente bajaCliente(String dni) throws OperacionNoValida {
-		Cliente c = new Cliente();
-		c.setDni(dni);
-		
-		
+		if (clientes.cliente(dni) ==  null) {
+			throw new OperacionNoValida();	
+		}
+		if(!(clientes.cliente(dni).getSeguros().isEmpty())) {
+			throw new OperacionNoValida();
+		}
+		return clientes.eliminaCliente(dni);
 		
 		
 	}
+	
+	/**
+	 * Retorna el cliente cuyo dni se pasa como parámetro
+	 * @param dni DNI del cliente buscado
+	 * @return El cliente cuyo dni coincide con el parámetro
+	 * 		   null en caso de que no exista
+	 */
+	public Cliente cliente(String dni) {
+		if (clientes.cliente(dni) ==  null) {
+			throw new OperacionNoValida();	
+		}
+		return clientes.cliente(dni);
+		
+	}
+	
+	/**
+	 * Retorna el seguro cuya matrícula asociada se pasa como parámetro
+	 * @param matricula Identificador del seguro
+	 * @return El seguro indicado
+	 * 	       null si no existe
+	 */
+	public Seguro seguro(String matricula) {
+		if (seguros.seguro(matricula) != null) {
+			throw new OperacionNoValida();	
+		}
+		return seguros.seguro(matricula);
+		
+	}
+	
 }
