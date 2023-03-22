@@ -3,13 +3,21 @@ package es.unican.is2.SegurosBusiness.daos;
 import es.unican.is2.SegurosCommon.daos.Cliente;
 import es.unican.is2.SegurosCommon.daos.Seguro;
 import es.unican.is2.SegurosCommon.interfaces.IClientesDAO;
+import es.unican.is2.SegurosCommon.interfaces.IGestionClientes;
 import es.unican.is2.SegurosCommon.interfaces.IGestionSeguros;
+import es.unican.is2.SegurosCommon.interfaces.IInfoSeguros;
 import es.unican.is2.SegurosCommon.interfaces.ISegurosDAO;
 
 
-public class GestionSeguros implements IGestionSeguros {
+public class GestionSeguros implements IGestionSeguros, IGestionClientes, IInfoSeguros{
 	private ISegurosDAO seguros;
 	private IClientesDAO clientes;
+	
+	public GestionSeguros(IClientesDAO clientes, ISegurosDAO seguros) {
+		this.seguros = seguros;
+		this.clientes = clientes;
+		
+	}
  	
 	/**
 	 * Añade un nuevo seguro al cliente cuyo dni se pasa

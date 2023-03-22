@@ -16,11 +16,13 @@ import javax.swing.JList;
 
 import javax.swing.border.LineBorder;
 
+import es.unican.is2.SegurosBusiness.daos.GestionSeguros;
 import es.unican.is2.SegurosCommon.daos.Cliente;
 import es.unican.is2.SegurosCommon.daos.Seguro;
 import es.unican.is2.SegurosCommon.interfaces.IGestionClientes;
 import es.unican.is2.SegurosCommon.interfaces.IGestionSeguros;
 import es.unican.is2.SegurosCommon.interfaces.IInfoSeguros;
+import es.unican.is2.SegurosCommon.interfaces.IGestionSeguros.OperacionNoValida;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -43,15 +45,14 @@ public class VistaAgente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VistaAgente(IGestionClientes clientes,
-			IGestionSeguros seguros, IInfoSeguros info) {
+	public VistaAgente(IGestionClientes clientes,IGestionSeguros seguros, IInfoSeguros info) {
 		
 		this.clientes = clientes;
 		this.seguros = seguros;
 		this.info = info;
 		init();
 	}
-	
+
 	public void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 441, 341);
