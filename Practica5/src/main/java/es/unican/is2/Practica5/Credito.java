@@ -8,15 +8,15 @@ import java.util.List;
 public class Credito extends Tarjeta {
 	
 	private double mCredito;
-	private List<Movimiento> mMovimientosMensuales;
-	private List<Movimiento> mhistoricoMovimientos;
+	private List<Movimiento> movimientosMensuales;
+	private List<Movimiento> historicoMovimientos;
 	
 	
 	public Credito(String numero, String titular, CuentaAhorro c, double credito) {
 		super(numero, titular, c);
 		mCredito = credito;
-		mMovimientosMensuales = new LinkedList<Movimiento>();
-		mhistoricoMovimientos = new LinkedList<Movimiento>();
+		movimientosMensuales = new LinkedList<Movimiento>();
+		historicoMovimientos = new LinkedList<Movimiento>();
 	}
 	//WMC = 1
 	//CBO = 1 Movimiento
@@ -42,7 +42,7 @@ public class Credito extends Tarjeta {
 		if (getGastosAcumulados()+cantidad > mCredito) //WMC = 1	//CCOG = 1
 			throw new saldoInsuficienteException("Crédito insuficiente");
 		else { //WMC = 1	//CCOG = 1
-			mMovimientosMensuales.add(m); //WMC = 1
+			movimientosMensuales.add(m); //WMC = 1
 		}
 	}
 	//WMC = 4
@@ -63,7 +63,7 @@ public class Credito extends Tarjeta {
 		m.setF(now);
 		m.setC("Compra a crédito en: " + datos);
 		m.setI(-cantidad);
-		mMovimientosMensuales.add(m); //WMC = 1 add
+		movimientosMensuales.add(m); //WMC = 1 add
 	}
 	//WMC = 3
 	//CBO = 3
@@ -71,8 +71,8 @@ public class Credito extends Tarjeta {
 	
     public double getGastosAcumulados() {
 		double r = 0.0;
-		for (int i = 0; i < this.mMovimientosMensuales.size(); i++) { //WMC = 1  CCOG = 1
-			Movimiento m = (Movimiento) mMovimientosMensuales.get(i);
+		for (int i = 0; i < this.movimientosMensuales.size(); i++) { //WMC = 1  CCOG = 1
+			Movimiento m = (Movimiento) movimientosMensuales.get(i);
 			r += m.getI();
 		}
 		return -r;
@@ -96,25 +96,25 @@ public class Credito extends Tarjeta {
 		LocalDateTime now = LocalDateTime.now();
 		liq.setF(now);
 		liq.setC("Liquidación de operaciones tarjeta crédito");
-		double total = 0.0;
-		for (int i = 0; i < this.mMovimientosMensuales.size(); i++) { //WMC = 1   CCOG = 1
-			Movimiento m = (Movimiento) mMovimientosMensuales.get(i);
-			total += m.getI();
+		double r = 0.0;
+		for (int i = 0; i < this.movimientosMensuales.size(); i++) { //WMC = 1   CCOG = 1
+			Movimiento m = (Movimiento) movimientosMensuales.get(i);
+			r += m.getI();
 		}
-		liq.setI(total);
+		liq.setI(r);
 		//si hay mmovimiento
-		if (total != 0) //WMC = 1	CCOG = 1
+		if (r != 0) //WMC = 1	CCOG = 1
 			mCuentaAsociada.addMovimiento(liq);
 		
-		mhistoricoMovimientos.addAll(mMovimientosMensuales); //WMC = 1 add
-		mMovimientosMensuales.clear();
+		historicoMovimientos.addAll(movimientosMensuales); //WMC = 1 add
+		movimientosMensuales.clear();
 	}
 	//WMC = 3
 	//CBO = 2, Movimiento y mcuentaAsociada
 	//CCOG = 2
 
 	public List<Movimiento> getMovimientosUltimoMes() {
-		return mMovimientosMensuales;
+		return movimientosMensuales;
 	}
 	//WMC = 1
 	//CBO = 1
@@ -126,7 +126,7 @@ public class Credito extends Tarjeta {
 	//CBO = 1
 	
 	public List<Movimiento> getMovimientos() {
-		return mhistoricoMovimientos;
+		return historicoMovimientos;
 	}
 	//WMC = 1
 	//CBO = 1
