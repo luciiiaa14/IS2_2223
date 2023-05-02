@@ -1,8 +1,8 @@
 package es.unican.is2.Practica5;
 @SuppressWarnings("serial")
-public class datoErroneoException extends RuntimeException {
+public class DatoErroneoException extends RuntimeException {
 	
-	public datoErroneoException (String mensaje) {
+	public DatoErroneoException (String mensaje) {
 		super(mensaje);
 	}
 

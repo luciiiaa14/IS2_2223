@@ -8,71 +8,75 @@ public class CuentaAhorro extends Cuenta {
 	private static final int LIMITE_MIL = 1000;
 	private static final double SALDO_INICIAL = 0.00;
 	private List<Movimiento> mMovimientos;
-	private LocalDate mFechaDeCaducidadTarjetaDebito;
-	private LocalDate mFechaDeCaducidadTarjetaCredito;
+	private LocalDate fechaDeCaducidadTarjetaDebito;
+	private LocalDate fechaDeCaducidadTarjetaCredito;
 	private double limiteDebito;
 
-	public CuentaAhorro(String numCuenta, LocalDate date, LocalDate date2) throws datoErroneoException {
+	public CuentaAhorro(String numCuenta, LocalDate date, LocalDate date2) throws DatoErroneoException {
 		super(numCuenta);
-		this.mFechaDeCaducidadTarjetaDebito = date;
-		this.mFechaDeCaducidadTarjetaCredito = date2;
+		this.fechaDeCaducidadTarjetaDebito = date;
+		this.fechaDeCaducidadTarjetaCredito = date2;
 		mMovimientos = new LinkedList<Movimiento>();
 		limiteDebito = LIMITE_MIL;
 	}
 	//WMC = 1
 
-	public void ingresar(double x) throws datoErroneoException {
-		if (x <= 0) //WMC = 1	//CCOG = 1
-			throw new datoErroneoException("No se puede ingresar una cantidad negativa");
+	public void ingresar(double x) throws DatoErroneoException {
+		compruebaCantidadNegativa(x);
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
-		m.setF(now);
-		m.setC("Ingreso en efectivo");
-		m.setI(x);
+		m.setFecha(now);
+		m.setConcepto("Ingreso en efectivo");
+		m.setImporte(x);
 		this.mMovimientos.add(m); //WMC = 1
 	}
 	//WMC = 2
 	//CCOG = 1
 
-	public void retirar(double x) throws saldoInsuficienteException, datoErroneoException {
-		if (x <= 0) //WMC = 1	//CCOG = 1
-			throw new datoErroneoException("No se puede retirar una cantidad negativa");
-		if (getSaldo() < x) //WMC = 1	//CCOG = 1
-			throw new saldoInsuficienteException("Saldo insuficiente");
+	public void retirar(double x) throws SaldoInsuficienteException, DatoErroneoException {
+		compruebaCantidadNegativa(x);
+		compruebaSaldo(x);
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
-		m.setF(now);
-		m.setC("Retirada de efectivo");
-		m.setI(-x);
+		m.setFecha(now);
+		m.setConcepto("Retirada de efectivo");
+		m.setImporte(-x);
 		this.mMovimientos.add(m); //WMC = 1
 	}
 	//WMC = 3
 	//CCOG = 2
 
-	public void ingresar(String concepto, double x) throws datoErroneoException {
+	private void compruebaCantidadNegativa(double x) {
 		if (x <= 0) //WMC = 1	//CCOG = 1
-			throw new datoErroneoException("No se puede ingresar una cantidad negativa");
+			throw new DatoErroneoException("No se puede retirar una cantidad negativa");
+	}
+	
+
+	public void ingresar(String concepto, double x) throws DatoErroneoException {
+		compruebaCantidadNegativa(x);
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
-		m.setF(now);
-		m.setC(concepto);
-		m.setI(x);
+		m.setFecha(now);
+		m.setConcepto(concepto);
+		m.setImporte(x);
 		this.mMovimientos.add(m); //WMC = 1
 	}
 	//WMC = 2
 	//CCOG = 1
 
-	public void retirar(String concepto, double x) throws saldoInsuficienteException, datoErroneoException {
-		if (getSaldo() < x) //WMC = 1 	//CCOG = 1
-			throw new saldoInsuficienteException("Saldo insuficiente");
-		if (x <= 0) //WMC = 1	//CCOG = 1
-			throw new datoErroneoException("No se puede retirar una cantidad negativa");
+	public void retirar(String concepto, double x) throws SaldoInsuficienteException, DatoErroneoException {
+		compruebaSaldo(x);
+		compruebaCantidadNegativa(x);
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
-		m.setF(now);
-		m.setC(concepto);
-		m.setI(-x);
+		m.setFecha(now);
+		m.setConcepto(concepto);
+		m.setImporte(-x);
 		this.mMovimientos.add(m); //WMC = 1
+	}
+	private void compruebaSaldo(double x) {
+		if (getSaldo() < x) //WMC = 1 	//CCOG = 1
+			throw new SaldoInsuficienteException("Saldo insuficiente");
 	}
 	//WMC = 3´
 	//CCOG = 2
@@ -81,7 +85,7 @@ public class CuentaAhorro extends Cuenta {
 		double r = SALDO_INICIAL;
 		for (int i = 0; i < this.mMovimientos.size(); i++) { //WMC = 1	//CCOG = 1
 			Movimiento m = (Movimiento) mMovimientos.get(i);
-			r += m.getI();
+			r += m.getImporte();
 		}
 		return r;
 	}
@@ -98,12 +102,12 @@ public class CuentaAhorro extends Cuenta {
 	//WMC = 1
 
 	public LocalDate getCaducidadDebito() {
-		return this.mFechaDeCaducidadTarjetaDebito;
+		return this.fechaDeCaducidadTarjetaDebito;
 	}
 	//WMC = 1
 
 	public LocalDate getCaducidadCredito() {
-		return this.mFechaDeCaducidadTarjetaCredito;
+		return this.fechaDeCaducidadTarjetaCredito;
 	}
 	//WMC = 1
 

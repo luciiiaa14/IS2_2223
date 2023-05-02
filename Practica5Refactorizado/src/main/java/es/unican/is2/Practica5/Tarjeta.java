@@ -17,7 +17,7 @@ public abstract class Tarjeta {
 	 * @throws saldoInsuficienteException
 	 * @throws datoErroneoException
 	 */
-	public abstract void retirar(double x) throws saldoInsuficienteException, datoErroneoException;
+	public abstract void retirar(double x) throws SaldoInsuficienteException, DatoErroneoException;
 	//WMC= 1
 
 	/**
@@ -28,7 +28,7 @@ public abstract class Tarjeta {
 	 * @throws datoErroneoException
 	 */
 	public abstract void pagoEnEstablecimiento(String datos, double x)
-			throws saldoInsuficienteException, datoErroneoException;
+			throws SaldoInsuficienteException, DatoErroneoException;
 	//WMC= 1
 	
 }

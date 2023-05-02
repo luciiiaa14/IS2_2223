@@ -4,22 +4,23 @@ import java.util.List;
 
 public class Cliente {
 	public static final double CERO_EUROS = 0.0;
-	
+	private String calle;
+	private String zip;
+	private String localidad;
 	public String nombre;
 	
 	public String telefono;
 	public String dni;
 	
     private List<Cuenta> Cuentas = new LinkedList<Cuenta>();
-    private List<Direccion> direcciones;
+ 
     
     
- 	public Cliente(String titular, String calle, String zip, String localidad, 
- 			String telefono, String dni) {  
+ 	public Cliente(String titular,String telefono, String dni, Direccion direccion) {  
 		this.nombre = titular;
-		direcciones = new LinkedList<Direccion>();
 		this.telefono = telefono;
 		this.dni = dni;
+		
 	}
  	//WMC= 1, no hay bucles; solo hay un camino posible
  	//CBO = 0
@@ -31,6 +32,14 @@ public class Cliente {
 	}
 	//WMC = 1, no realiza operaciones complejas, simplemente anhade
 	//CBO = 1, accede a Cuenta pasando el parametro
+	
+	public void cambiaDireccion(Direccion dir) {
+		this.calle = dir.calle;
+		this.zip = dir.zip;
+		this.localidad = dir.localidad;
+	}
+	//WMC= 1, no hay bucles; solo hay un camino posible
+	//CBO = 0
 	
 	
 	public double getSaldoTotal() {

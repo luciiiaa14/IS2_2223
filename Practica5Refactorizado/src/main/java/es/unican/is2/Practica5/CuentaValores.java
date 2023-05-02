@@ -18,7 +18,10 @@ public class CuentaValores extends Cuenta {
 	//WMC = 1
 	
 	public boolean anhadeValor(Valor valor) {
-		
+		for (Valor v:valores) {	//WMC = 1	CCOG=1
+			if (v.getEntidad().equals(valor.getEntidad()))	//WMC = 2	CCOG=1
+				return false;
+		}
 		valores.add(valor); //WMC = 1
 		return true;
 	}

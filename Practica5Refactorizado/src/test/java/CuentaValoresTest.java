@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import es.unican.is2.Practica5.CuentaValores;
+import es.unican.is2.Practica5.Valor;
+
 public class CuentaValoresTest {
 	
 	private CuentaValores sut;

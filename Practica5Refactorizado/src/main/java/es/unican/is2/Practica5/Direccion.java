@@ -13,14 +13,6 @@ public class Direccion {
 	//WMC= 1, no hay bucles; solo hay un camino posible
 	//CBO = 0
 	
-	public void cambiaDireccion(String calle, String zip, String localidad) {
-		this.calle = calle;
-		this.zip = zip;
-		this.localidad = localidad;
-	}
-	//WMC= 1, no hay bucles; solo hay un camino posible
-	//CBO = 0
-	
 	
 	public String getCalle() {
 		return calle;
