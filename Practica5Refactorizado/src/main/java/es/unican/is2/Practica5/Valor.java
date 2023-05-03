@@ -1,7 +1,7 @@
 package es.unican.is2.Practica5;
 /**
  * Clase que representa un valor en bolsa (paquete de acciones). 
- * Cada valor contiene un número de acciones 
+ * Cada valor contiene un n mero de acciones 
  * de una de las entidades del IBEX 35
  */
 public class Valor {
@@ -53,7 +53,7 @@ public class Valor {
 	
 	//WMC =7
 	//WMCn=1
-	//CBO=1 Object
+	//CBOAff=1 Object
 	//DIT=0
 	//NOC=0
 	//CCOG=1 Valor

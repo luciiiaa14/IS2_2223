@@ -30,7 +30,7 @@ public class CuentaAhorro extends Cuenta {
 		m.setImporte(x);
 		this.mMovimientos.add(m); //WMC = 1
 	}
-	//WMC = 2
+	//WMC = 1
 	//CCOG = 1
 
 	public void retirar(double x) throws SaldoInsuficienteException, DatoErroneoException {
@@ -43,7 +43,7 @@ public class CuentaAhorro extends Cuenta {
 		m.setImporte(-x);
 		this.mMovimientos.add(m); //WMC = 1
 	}
-	//WMC = 3
+	//WMC = 1
 	//CCOG = 2
 
 	private void compruebaCantidadNegativa(double x) {
@@ -78,7 +78,7 @@ public class CuentaAhorro extends Cuenta {
 		if (getSaldo() < x) //WMC = 1 	//CCOG = 1
 			throw new SaldoInsuficienteException("Saldo insuficiente");
 	}
-	//WMC = 3´
+	//WMC = 3 
 	//CCOG = 2
 
 	public double getSaldo() {
@@ -94,7 +94,7 @@ public class CuentaAhorro extends Cuenta {
 	public void addMovimiento(Movimiento m) {
 		mMovimientos.add(m);
 	}
-	//WMC = 2
+	//WMC = 5
 
 	public List<Movimiento> getMovimientos() {
 		return mMovimientos;

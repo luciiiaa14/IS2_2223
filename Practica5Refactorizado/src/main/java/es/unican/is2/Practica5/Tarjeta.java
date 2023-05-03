@@ -18,7 +18,7 @@ public abstract class Tarjeta {
 	 * @throws datoErroneoException
 	 */
 	public abstract void retirar(double x) throws SaldoInsuficienteException, DatoErroneoException;
-	//WMC= 1
+	//WMC= 0
 
 	/**
 	 * Pago en establecimiento con la tarjeta
@@ -29,12 +29,12 @@ public abstract class Tarjeta {
 	 */
 	public abstract void pagoEnEstablecimiento(String datos, double x)
 			throws SaldoInsuficienteException, DatoErroneoException;
-	//WMC= 1
+	//WMC= 0
 	
 }
-//WMC= 3
+//WMC= 1
 //WMCn=1
-//CBO=1
+//CBO=2
 //DIT= 0
 //NOC= 2
 //CCOG=0

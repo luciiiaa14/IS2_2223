@@ -13,18 +13,18 @@ public class Debito extends Tarjeta {
 	@Override
 	public void retirar(double x) throws SaldoInsuficienteException, DatoErroneoException {
 		compruebaSaldoDisponible(x);
-		this.mCuentaAsociada.retirar("Retirada en cajero automático", x);
+		this.mCuentaAsociada.retirar("Retirada en cajero autom tico", x);
 		saldoDiarioDisponible-=x;
 	}
 	//WMC = 1
 	//CCOG=1
 
 	private void compruebaSaldoDisponible(double x) {
-		if (saldoDiarioDisponible<x) { 	//WMC = 1	CCOG=1
+		if (saldoDiarioDisponible<x) { 	
 			throw new SaldoInsuficienteException("Saldo insuficiente");
 		}
 	}
-	
+	//WMC = 1	CCOG=1
 	@Override
 	public void pagoEnEstablecimiento(String datos, double x) throws SaldoInsuficienteException, DatoErroneoException {
 		compruebaSaldoDisponible(x);
@@ -32,7 +32,7 @@ public class Debito extends Tarjeta {
 		saldoDiarioDisponible-=x;
 	}
 	//WMC = 1
-	//CCOG=1
+	
 	
 	public LocalDate getCaducidadDebito() {
 		return this.mCuentaAsociada.getCaducidadDebito();
@@ -40,7 +40,7 @@ public class Debito extends Tarjeta {
 	//WMC = 1
 	
 	/**
-	 * Método invocado automáticamente a las 00:00 de cada día
+	 * M todo invocado autom ticamente a las 00:00 de cada d a
 	 */
 	public void restableceSaldo() {
 		saldoDiarioDisponible = mCuentaAsociada.getLimiteDebito();
@@ -53,7 +53,7 @@ public class Debito extends Tarjeta {
 	//WMC = 1
 
 }
-//WMC = 6
+//WMC = 7
 //WMCn = 1
 //CBO = 1 CuentaAhorro
 //DIT= 1

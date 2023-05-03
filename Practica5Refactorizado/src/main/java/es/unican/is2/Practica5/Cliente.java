@@ -77,8 +77,8 @@ public class Cliente {
 	//WMC = 1
 	//CBO = 0
 	
-//WMC TOTAL = 10
-//WMCn = 10 / 6 = 1.67
+//WMC TOTAL = 11
+//WMCn = 11 / 7 = 1.57
 //CBO TOTAL = 4
 //DIT TOTAL = 0
 //NOC = 0, no tiene hijos 

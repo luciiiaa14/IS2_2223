@@ -19,18 +19,18 @@ public class CuentaValores extends Cuenta {
 	
 	public boolean anhadeValor(Valor valor) {
 		for (Valor v:valores) {	//WMC = 1	CCOG=1
-			if (v.getEntidad().equals(valor.getEntidad()))	//WMC = 2	CCOG=1
+			if (v.getEntidad().equals(valor.getEntidad())) 	//WMC = 2	CCOG=2
 				return false;
 		}
 		valores.add(valor); //WMC = 1
 		return true;
 	}
-	//WMC = 1
+	//WMC = 2
 	
 }
-//WMC= 3
-//WMCn= 1
+//WMC= 4
+//WMCn= 1.33
 //DIT =1, es un hijo de Cuenta
 //NOC= 0, no tiene hijos
-//CBO= 1, Valor
-//CCOG = 0
+//CBO= 3 (valor, cuenta y cliente).
+//CCOG = 3

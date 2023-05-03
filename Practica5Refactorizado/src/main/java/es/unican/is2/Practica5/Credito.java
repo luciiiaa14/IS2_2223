@@ -25,7 +25,7 @@ public class Credito extends Tarjeta {
 
 	/**
 	 * Retirada de dinero en cajero con la tarjeta
-	 * @param x Cantidad a retirar. Se aplica una comisión del 5%.
+	 * @param x Cantidad a retirar. Se aplica una comisi n del 5%.
 	 * @throws saldoInsuficienteException
 	 * @throws datoErroneoException
 	 */
@@ -38,26 +38,29 @@ public class Credito extends Tarjeta {
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
 		m.setFecha(now);
-		m.setConcepto("Retirada en cajero automático");
-		// Añadimos una comisión de un 5%
+		m.setConcepto("Retirada en cajero autom tico");
+		// A adimos una comisi n de un 5%
 		m.setImporte(-x);
 		
 		
 			mMovimientosMensuales.add(m); //WMC = 1
 		
 	}
+	//WMC = 1
+	//CBO = 1 Se trata del Movimiento
+
 	private void compruebaGastos(double x) {
 		if (getGastosAcumulados()+x > mCredito) //WMC = 1	//CCOG = 1
-			throw new SaldoInsuficienteException("Crédito insuficiente");
+			throw new SaldoInsuficienteException("Cr dito insuficiente");
 	}
-		//WMC = 3
-		//CBO = 3 
-		//CCOG = 1
+		//WMC = 1
+		//CBO = 1 SaldoInsuficienteException
 	private void compruebaCantidad(double x) {
 		if (x<0) //WMC = 1	//CCOG = 1
 			throw new DatoErroneoException("No se puede retirar una cantidad negativa");
 	}
-	
+	//WMC = 1
+	//CBO = 1 DatoErroneoException
 	
 
 	@Override
@@ -69,21 +72,21 @@ public class Credito extends Tarjeta {
 		Movimiento m = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
 		m.setFecha(now);
-		m.setConcepto("Compra a crédito en: " + datos);
+		m.setConcepto("Compra a cr dito en: " + datos);
 		m.setImporte(-x);
 		mMovimientosMensuales.add(m); //WMC = 1 add
 	}
-	//WMC = 3
-	//CBO = 3
-	//CCOG = 2
+	//WMC = 1
+	//CBO = 1
+	//CCOG = 0
 	
     public double getGastosAcumulados() {
-		double r = PRECIO_INICIAL;
+		double r = PRECIO_INICIAL; //CCOG=1
 		r = calculaMovimientos(r);
 		return -r;
 	}
     //WMC = 1
-    //CBO = 1
+    //CBO = 0
     //CCOG = 1
 	
 	
@@ -94,13 +97,13 @@ public class Credito extends Tarjeta {
 	//CBO = 1
 
 	/**
-	 * Método que se invoca automáticamente el día 1 de cada mes
+	 * M todo que se invoca autom ticamente el d a 1 de cada mes
 	 */
 	public void liquidar() {
 		Movimiento liq = new Movimiento();
 		LocalDateTime now = LocalDateTime.now();
 		liq.setFecha(now);
-		liq.setConcepto("Liquidación de operaciones tarjeta crédito");
+		liq.setConcepto("Liquidaci n de operaciones tarjeta cr dito");
 		double r = 0.0;
 		r = calculaMovimientos(r);
 		liq.setImporte(r);
@@ -111,6 +114,9 @@ public class Credito extends Tarjeta {
 		mhistoricoMovimientos.addAll(mMovimientosMensuales); //WMC = 1 add
 		mMovimientosMensuales.clear();
 	}
+	//WMC =2
+	//CBO =1
+	//CCOG = 1
 	
 	private double calculaMovimientos(double r) {
 		for (int i = 0; i < this.mMovimientosMensuales.size(); i++) { //WMC = 1   CCOG = 1
@@ -119,7 +125,9 @@ public class Credito extends Tarjeta {
 		}
 		return r;
 	}
-	
+	//WMC = 1
+	//CBO = 1 Movimiento
+	//CCOG = 1 
 
 	public List<Movimiento> getMovimientosUltimoMes() {
 		return mMovimientosMensuales;
@@ -141,7 +149,7 @@ public class Credito extends Tarjeta {
 	
 //WMC = 13
 //WMCn = 13/9 = 1,44
-//CBO = 3, Moviemiento, Tarjeta, CuentaAhorro
+//CBO = 4, Moviemiento, Tarjeta, CuentaAhorro, Cuenta
 //DIT = 0
 //NOC= 0, no tiene hijos
 //CCOG =  5

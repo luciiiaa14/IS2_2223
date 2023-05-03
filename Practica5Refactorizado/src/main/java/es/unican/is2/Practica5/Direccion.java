@@ -33,7 +33,7 @@ public class Direccion {
 	//CBO = 0
 	
 	
-	//WMC TOTAL = 5
+	//WMC TOTAL = 4
 	//WMCn =1
 	//CBO=0
 	//DIT=0
